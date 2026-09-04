@@ -211,57 +211,29 @@ export function DashboardHeader() {
         {/* Header Menu Search Component */}
         <HeaderSearchMenu />
 
-        {/* Quick Action Button */}
-        <DropdownMenu>
-          <DropdownMenuTrigger className="cursor-pointer">
-            <Button
-              size="xs"
-              className="hidden gap-1.5 font-medium shadow-xs sm:inline-flex"
-            >
-              <Plus className="size-3.5" />
-              <span>Create</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Quick Action
-            </DropdownMenuLabel>
-            <DropdownMenuItem className="gap-2">
-              <Plus className="size-4 text-primary" />
-              New Project
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2">
-              <UserCheck className="size-4 text-emerald-500" />
-              Invite Team Member
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2">
-              <TrendingUp className="size-4 text-amber-500" />
-              Generate Sales Report
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
         {/* Theme Toggle Button */}
         <ThemeToggle />
 
         {/* Notifications Dropdown */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="cursor-pointer">
-            <div className="relative inline-flex">
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="size-8 text-muted-foreground hover:text-foreground"
-              >
-                <Bell className="size-4" />
-                <span className="sr-only">Notifications</span>
-              </Button>
-              <span className="absolute top-1 right-1 flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-destructive opacity-75"></span>
-                <span className="relative inline-flex size-2 rounded-full bg-destructive"></span>
-              </span>
-            </div>
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <div className="relative inline-flex cursor-pointer">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="size-8 text-muted-foreground hover:text-foreground"
+                >
+                  <Bell className="size-4" />
+                  <span className="sr-only">Notifications</span>
+                </Button>
+                <span className="absolute top-1 right-1 flex size-2">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-destructive opacity-75"></span>
+                  <span className="relative inline-flex size-2 rounded-full bg-destructive"></span>
+                </span>
+              </div>
+            }
+          />
           <DropdownMenuContent align="end" className="w-80 p-0">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div className="flex items-center gap-2">
