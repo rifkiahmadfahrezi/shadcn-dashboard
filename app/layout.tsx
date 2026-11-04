@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers/query-provider";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const jakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-jakarta-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Template",
-  description:
-    "Starter template with Next.js, Tailwind CSS, TypeScript, xior, and TanStack Query",
+  title: "Halden — Workspace",
+  description: "Revenue, projects, and team activity for the Halden workspace.",
 };
 
 export default function RootLayout({
@@ -24,10 +28,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="flex min-h-full flex-col"
+      className={`${geistSans.variable} ${geistMono.variable} flex min-h-full flex-col`}
       suppressHydrationWarning
     >
-      <body className={`${jakartaSans.className} h-full antialiased`}>
+      <body className="h-full font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

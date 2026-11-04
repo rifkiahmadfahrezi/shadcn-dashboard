@@ -129,7 +129,7 @@ export function HeaderSearchMenu() {
     if (isOpen && listRef.current) {
       const selectedEl = listRef.current.children[selectedIndex] as HTMLElement;
       if (selectedEl) {
-        selectedEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        selectedEl.scrollIntoView({ block: "nearest" });
       }
     }
   }, [selectedIndex, isOpen]);
@@ -167,20 +167,20 @@ export function HeaderSearchMenu() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="group flex h-9 cursor-pointer items-center justify-between gap-2 rounded-xl border border-muted-foreground/20 bg-muted/40 px-3 text-xs text-muted-foreground shadow-none transition-all hover:border-muted-foreground/30 hover:bg-muted/70 focus-visible:ring-1 focus-visible:ring-primary focus-visible:outline-none"
+        className="group flex h-8 w-9 cursor-pointer items-center justify-center gap-2 rounded-lg border bg-card text-muted-foreground shadow-xs transition-[color,background-color,transform] duration-150 ease-out hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-0.98 sm:w-56 sm:justify-between sm:px-2.5"
       >
         <div className="flex min-w-0 items-center gap-2 truncate">
           <Search className="size-3.5 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-          <span className="truncate text-xs font-normal">Search menu...</span>
+          <span className="hidden truncate text-[13px] sm:inline">Search…</span>
         </div>
-        <kbd className="xs:inline-flex pointer-events-none hidden h-5 shrink-0 items-center gap-0.5 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground shadow-xs select-none">
+        <kbd className="pointer-events-none hidden h-5 shrink-0 items-center gap-0.5 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground select-none sm:inline-flex">
           <span className="text-[10px]">⌘</span>K
         </kbd>
       </button>
 
       {/* Portaled Dialog Search Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-lg border p-0 shadow-2xl">
+        <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 shadow-md transition-none">
           <DialogTitle className="sr-only">Search Menu</DialogTitle>
           <DialogDescription className="sr-only">
             Search dashboard menu options and navigation routes
@@ -194,7 +194,7 @@ export function HeaderSearchMenu() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Search dashboard menu..."
+              placeholder="Search pages…"
               className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
             />
             {query ? (
@@ -222,8 +222,8 @@ export function HeaderSearchMenu() {
           {/* Results Header */}
           <div className="flex items-center justify-between border-b bg-muted/30 px-3 py-1 text-[10px] font-medium text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <Command className="size-3 text-primary" />
-              {query ? `Results for "${query}"` : "All Menu Options"}
+              <Command className="size-3" />
+              {query ? `Results for "${query}"` : "Pages"}
             </span>
             <Badge
               variant="secondary"
@@ -243,7 +243,7 @@ export function HeaderSearchMenu() {
               <div className="py-8 text-center text-xs text-muted-foreground">
                 <Search className="mx-auto mb-2 size-6 text-muted-foreground/30" />
                 <p className="text-xs font-semibold text-foreground">
-                  No menu items found
+                  No pages match
                 </p>
                 <p className="mt-0.5 text-[11px] text-muted-foreground">
                   No matches found for &quot;{query}&quot;. Try searching for
@@ -262,7 +262,7 @@ export function HeaderSearchMenu() {
                     onClick={() => handleSelect(item.path)}
                     onMouseEnter={() => setSelectedIndex(index)}
                     className={cn(
-                      "flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left text-xs transition-all duration-150",
+                      "flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left text-xs",
                       isSelected
                         ? "bg-accent font-medium text-accent-foreground shadow-2xs"
                         : "text-foreground hover:bg-accent/60"
@@ -270,9 +270,9 @@ export function HeaderSearchMenu() {
                   >
                     <div
                       className={cn(
-                        "flex size-7 shrink-0 items-center justify-center rounded-md border bg-muted/50 text-muted-foreground transition-colors",
+                        "flex size-7 shrink-0 items-center justify-center rounded-md border bg-muted/50 text-muted-foreground",
                         isSelected &&
-                          "border-primary/40 bg-primary/10 text-primary"
+                          "border-foreground/15 bg-background text-foreground"
                       )}
                     >
                       <Icon className="size-3.5" />
@@ -286,7 +286,7 @@ export function HeaderSearchMenu() {
                         {item.badge && (
                           <Badge
                             variant="secondary"
-                            className="h-3.5 border-0 bg-primary/10 px-1 text-[9px] font-semibold text-primary"
+                            className="h-4 border-0 px-1 text-[10px] font-medium text-muted-foreground"
                           >
                             {item.badge}
                           </Badge>

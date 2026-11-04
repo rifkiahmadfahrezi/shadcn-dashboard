@@ -30,7 +30,7 @@ function Progress({
       <div
         data-slot="progress-indicator"
         className={cn(
-          "size-full flex-1 bg-primary transition-all duration-300 ease-in-out",
+          "size-full flex-1 bg-primary transition-transform duration-300 ease-in-out",
           indicatorClassName
         )}
         style={{ transform: `translateX(-${100 - percentage}%)` }}

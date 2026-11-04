@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Download, Calendar, Sparkles, ArrowUpRight } from "lucide-react";
+import { Download, Calendar, ArrowRight, FileText, Bell } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,117 +10,97 @@ import { RevenueChart } from "@/components/dashboard/overview/revenue-chart";
 import { RecentSales } from "@/components/dashboard/overview/recent-sales";
 import { ProjectProgress } from "@/components/dashboard/overview/project-progress";
 import { ActivityFeed } from "@/components/dashboard/overview/activity-feed";
+import { PageHeader } from "@/components/dashboard/page-header";
+import { EmptyState } from "@/components/dashboard/empty-state";
 
 export default function DashboardPage() {
   return (
-    <div className="animate-in space-y-6 duration-300 fade-in-50">
-      {/* Top Banner / Welcome Header */}
-      <div className="flex flex-col items-start justify-between gap-4 border-b pb-5 sm:flex-row sm:items-center">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Dashboard Overview
-            </h1>
-            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-              <Sparkles className="size-3" /> Live Updates
-            </span>
-          </div>
-          <p className="text-xs text-muted-foreground sm:text-sm">
-            Welcome back, Alex. Here is what is happening with your projects
-            today.
-          </p>
-        </div>
-
-        {/* Action Controls */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="cursor-pointer gap-1.5 text-xs shadow-xs"
-          >
-            <Calendar className="size-3.5" />
-            <span>Sep 1, 2026 - Sep 30, 2026</span>
-          </Button>
-
-          <Button
-            size="sm"
-            className="cursor-pointer gap-1.5 text-xs font-semibold shadow-xs"
-          >
-            <Download className="size-3.5" />
-            <span>Export Report</span>
-          </Button>
-        </div>
+    <div className="space-y-8">
+      <div className="animate-rise">
+        <PageHeader
+          eyebrow="Tuesday, 4 November"
+          title="Good morning, Mira"
+          description="Revenue is tracking 8.3% ahead of October. Two invoices need your attention."
+          actions={
+            <>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Calendar />
+                <span className="tabular-nums">Oct 6 – Nov 4</span>
+              </Button>
+              <Button size="sm" className="gap-1.5">
+                <Download />
+                Export
+              </Button>
+            </>
+          }
+        />
       </div>
 
-      {/* Dashboard Navigation Tabs */}
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="bg-muted/60 p-1">
+      <Tabs
+        defaultValue="overview"
+        className="animate-rise space-y-6"
+        style={{ "--i": 1 } as React.CSSProperties}
+      >
+        <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
         </TabsList>
 
-        {/* Overview Tab Content */}
         <TabsContent value="overview" className="space-y-6">
-          {/* Key Metric KPI Cards */}
           <MetricCards />
 
-          {/* Charts & Recent Sales Grid */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-8">
+          <div
+            className="grid animate-rise grid-cols-1 gap-6 lg:grid-cols-8"
+            style={{ "--i": 2 } as React.CSSProperties}
+          >
             <RevenueChart />
             <RecentSales />
           </div>
 
-          {/* Projects Progress & Live Activity Feed Grid */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
+          <div
+            className="grid animate-rise grid-cols-1 gap-6 lg:grid-cols-4"
+            style={{ "--i": 3 } as React.CSSProperties}
+          >
             <ProjectProgress />
             <ActivityFeed />
           </div>
         </TabsContent>
 
-        {/* Analytics Tab Content */}
-        <TabsContent value="analytics" className="space-y-6">
-          <div className="space-y-3 rounded-xl border bg-card p-8 text-center">
-            <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Sparkles className="size-6" />
-            </div>
-            <h3 className="text-lg font-semibold">Deep AI Analytics</h3>
-            <p className="mx-auto max-w-md text-xs text-muted-foreground">
-              Real-time user engagement cohort breakdown and funnel conversion
-              statistics.
-            </p>
-            <Button size="sm" className="gap-1.5 text-xs">
-              <span>View Full Analytics</span>
-              <ArrowUpRight className="size-3.5" />
-            </Button>
-          </div>
+        <TabsContent value="analytics">
+          <EmptyState
+            title="Cohort analysis is still collecting data"
+            description="We need about 14 days of events before retention curves are meaningful. The first report lands on Nov 18."
+            action={
+              <Button variant="outline" size="sm" className="gap-1.5">
+                Open live analytics
+                <ArrowRight />
+              </Button>
+            }
+          />
         </TabsContent>
 
-        {/* Reports Tab Content */}
-        <TabsContent value="reports" className="space-y-6">
-          <div className="space-y-3 rounded-xl border bg-card p-8 text-center">
-            <h3 className="text-lg font-semibold">Financial & Usage Reports</h3>
-            <p className="mx-auto max-w-md text-xs text-muted-foreground">
-              Download monthly CSV, PDF, and audit logs.
-            </p>
-            <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-              <Download className="size-3.5" />
-              <span>Download Annual Audit</span>
-            </Button>
-          </div>
+        <TabsContent value="reports">
+          <EmptyState
+            icon={FileText}
+            title="No reports scheduled"
+            description="Schedule a monthly CSV or PDF summary and it will arrive in your inbox on the first business day."
+            action={
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download />
+                Download Q3 audit
+              </Button>
+            }
+          />
         </TabsContent>
 
-        {/* Notifications Tab Content */}
-        <TabsContent value="notifications" className="space-y-6">
-          <div className="rounded-xl border bg-card p-6">
-            <h3 className="mb-2 text-sm font-semibold">
-              Notification Preferences
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              Manage your email and in-app system alerts.
-            </p>
-          </div>
+        <TabsContent value="notifications">
+          <EmptyState
+            icon={Bell}
+            title="You're all caught up"
+            description="Email and in-app alerts are on. Adjust which events reach you from settings."
+          />
         </TabsContent>
       </Tabs>
     </div>

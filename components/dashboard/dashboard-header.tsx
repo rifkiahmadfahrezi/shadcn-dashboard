@@ -2,19 +2,11 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import {
-  Bell,
-  CheckCircle2,
-  Plus,
-  Sparkles,
-  UserCheck,
-  TrendingUp,
-} from "lucide-react";
+import { Bell, CheckCircle2, FileText } from "lucide-react";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -27,8 +19,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/dashboard/theme-toggle";
@@ -174,10 +164,10 @@ export function DashboardHeader() {
   const breadcrumbs = getBreadcrumbs(pathname);
 
   return (
-    <header className="sticky top-0 z-30 flex h-13 shrink-0 items-center justify-between gap-1.5 border-b bg-background/95 px-3.5 backdrop-blur-md transition-all supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-2 border-b bg-background/80 px-4 backdrop-blur-xl backdrop-saturate-150 md:px-6">
       {/* Left section: Sidebar trigger & Breadcrumb */}
       <div className="flex items-center gap-1.5 md:gap-2">
-        <SidebarTrigger className="cursor-pointer" />
+        <SidebarTrigger className="cursor-pointer text-muted-foreground" />
         <Separator orientation="vertical" className="mr-0.5 h-3.5" />
         <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
@@ -193,7 +183,7 @@ export function DashboardHeader() {
                         {crumb.title}
                       </BreadcrumbLink>
                     ) : (
-                      <span className="text-xs font-normal text-muted-foreground/70 select-none">
+                      <span className="text-muted-foreground/70 select-none">
                         {crumb.title}
                       </span>
                     )}
@@ -207,7 +197,7 @@ export function DashboardHeader() {
       </div>
 
       {/* Center/Right section: Search & Actions */}
-      <div className="flex items-center gap-2 md:gap-3">
+      <div className="flex items-center gap-1.5">
         {/* Header Menu Search Component */}
         <HeaderSearchMenu />
 
@@ -218,102 +208,83 @@ export function DashboardHeader() {
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <div className="relative inline-flex cursor-pointer">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="size-8 text-muted-foreground hover:text-foreground"
-                >
-                  <Bell className="size-4" />
-                  <span className="sr-only">Notifications</span>
-                </Button>
-                <span className="absolute top-1 right-1 flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-destructive opacity-75"></span>
-                  <span className="relative inline-flex size-2 rounded-full bg-destructive"></span>
-                </span>
-              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative text-muted-foreground hover:text-foreground"
+              />
             }
-          />
+          >
+            <Bell strokeWidth={1.75} />
+            <span className="sr-only">Notifications, 3 unread</span>
+            <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-brand ring-2 ring-background" />
+          </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 p-0">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div className="flex items-center gap-2">
-                <h4 className="text-xs font-semibold">Notifications</h4>
-                <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
-                  3 New
-                </Badge>
+                <h4 className="text-[13px] font-semibold">Notifications</h4>
+                <span className="text-xs text-muted-foreground tabular-nums">
+                  3 unread
+                </span>
               </div>
-              <button className="cursor-pointer text-[11px] font-medium text-primary hover:underline">
+              <button className="cursor-pointer rounded-sm text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
                 Mark all read
               </button>
             </div>
 
             <div className="max-h-72 divide-y overflow-y-auto">
               <div className="flex cursor-pointer items-start gap-3 p-3 transition-colors hover:bg-muted/50">
-                <div className="mt-0.5 flex size-7 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 className="size-4" />
+                <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg border bg-card text-muted-foreground">
+                  <CheckCircle2 className="size-3.5" strokeWidth={1.75} />
                 </div>
-                <div className="space-y-0.5 text-xs">
+                <div className="space-y-0.5 text-[13px] leading-snug">
                   <p className="font-medium">Payment received</p>
-                  <p className="text-[11px] text-muted-foreground">
-                    Acme Corp completed invoice #INV-4029 ($1,250.00)
+                  <p className="text-muted-foreground">
+                    Ortho Labs paid INV-4029 ($312.00)
                   </p>
-                  <p className="text-[10px] text-muted-foreground/80">
-                    5 mins ago
-                  </p>
+                  <p className="text-xs text-muted-foreground/80">5 min ago</p>
                 </div>
               </div>
 
               <div className="flex cursor-pointer items-start gap-3 p-3 transition-colors hover:bg-muted/50">
-                <div className="mt-0.5 flex size-7 items-center justify-center rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  <Sparkles className="size-4" />
+                <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg border bg-card text-muted-foreground">
+                  <FileText className="size-3.5" strokeWidth={1.75} />
                 </div>
-                <div className="space-y-0.5 text-xs">
-                  <p className="font-medium">New AI Insights available</p>
-                  <p className="text-[11px] text-muted-foreground">
-                    Weekly analytics summary report is ready for viewing.
+                <div className="space-y-0.5 text-[13px] leading-snug">
+                  <p className="font-medium">Weekly summary ready</p>
+                  <p className="text-muted-foreground">
+                    Revenue, churn and top accounts for Oct 27 – Nov 2.
                   </p>
-                  <p className="text-[10px] text-muted-foreground/80">
-                    1 hour ago
-                  </p>
+                  <p className="text-xs text-muted-foreground/80">1 h ago</p>
                 </div>
               </div>
 
               <div className="flex cursor-pointer items-start gap-3 p-3 transition-colors hover:bg-muted/50">
-                <Avatar className="mt-0.5 size-7">
-                  <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" />
-                  <AvatarFallback>AR</AvatarFallback>
+                <Avatar className="mt-0.5 size-7 rounded-lg">
+                  <AvatarImage
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150"
+                    alt="Daniel Osei"
+                  />
+                  <AvatarFallback>DO</AvatarFallback>
                 </Avatar>
-                <div className="space-y-0.5 text-xs">
-                  <p className="font-medium">Alex comment</p>
-                  <p className="text-[11px] text-muted-foreground">
-                    &lsquo;Looks awesome! Let&apos;s ship the new dashboard
-                    components.&rsquo;
+                <div className="space-y-0.5 text-[13px] leading-snug">
+                  <p className="font-medium">Daniel commented</p>
+                  <p className="text-muted-foreground">
+                    &ldquo;Portal looks good on staging. Merging after
+                    QA.&rdquo;
                   </p>
-                  <p className="text-[10px] text-muted-foreground/80">
-                    3 hours ago
-                  </p>
+                  <p className="text-xs text-muted-foreground/80">3 h ago</p>
                 </div>
               </div>
             </div>
 
             <div className="border-t p-2 text-center">
-              <button className="w-full cursor-pointer py-1 text-xs font-medium text-muted-foreground hover:text-foreground">
+              <button className="w-full cursor-pointer rounded-md py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
                 View all notifications
               </button>
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        <Separator orientation="vertical" className="h-4" />
-
-        {/* User Profile Avatar */}
-        <Avatar className="size-8 cursor-pointer ring-2 ring-primary/20 transition-all hover:ring-primary/40">
-          <AvatarImage
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
-            alt="Alex Rivera"
-          />
-          <AvatarFallback>AR</AvatarFallback>
-        </Avatar>
       </div>
     </header>
   );

@@ -59,8 +59,9 @@ function TabsList({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="tabs-list"
+      role="tablist"
       className={cn(
-        "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
+        "flex h-10 w-full items-end gap-5 overflow-x-auto border-b text-muted-foreground",
         className
       )}
       {...props}
@@ -85,10 +86,8 @@ function TabsTrigger({
       aria-selected={isActive}
       onClick={() => onValueChange(value)}
       className={cn(
-        "inline-flex cursor-pointer items-center justify-center rounded-md px-3 py-1 text-xs font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-        isActive
-          ? "bg-background font-semibold text-foreground shadow-xs"
-          : "hover:text-foreground/80",
+        "relative inline-flex h-10 cursor-pointer items-center text-sm font-medium whitespace-nowrap transition-colors duration-150 ease-out outline-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-foreground after:transition-transform after:duration-200 after:ease-out focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 aria-selected:after:scale-x-100",
+        isActive ? "text-foreground" : "hover:text-foreground",
         className
       )}
       {...props}
@@ -112,7 +111,7 @@ function TabsContent({
       data-slot="tabs-content"
       role="tabpanel"
       className={cn(
-        "mt-2 animate-in duration-200 fade-in-50 outline-none",
+        "mt-2 animate-in duration-150 ease-out fade-in-0 outline-none",
         className
       )}
       {...props}

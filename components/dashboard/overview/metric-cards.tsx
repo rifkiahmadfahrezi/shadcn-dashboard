@@ -1,104 +1,80 @@
 "use client";
 
 import * as React from "react";
-import {
-  DollarSign,
-  Users,
-  CreditCard,
-  Activity,
-  ArrowUpRight,
-  ArrowDownRight,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
+const metrics = [
+  {
+    title: "Net revenue",
+    value: "$48,316.40",
+    change: "+8.3%",
+    trend: "up",
+    timeframe: "vs. October",
+  },
+  {
+    title: "Active subscriptions",
+    value: "2,184",
+    change: "+142",
+    trend: "up",
+    timeframe: "this month",
+  },
+  {
+    title: "Orders",
+    value: "11,907",
+    change: "+3.6%",
+    trend: "up",
+    timeframe: "vs. October",
+  },
+  {
+    title: "Live sessions",
+    value: "537",
+    change: "−4.2%",
+    trend: "down",
+    timeframe: "last hour",
+  },
+];
 
 export function MetricCards() {
-  const metrics = [
-    {
-      title: "Total Revenue",
-      value: "$45,231.89",
-      change: "+20.1%",
-      trend: "up",
-      timeframe: "from last month",
-      icon: DollarSign,
-      color: "text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/20",
-    },
-    {
-      title: "Subscriptions",
-      value: "+2,350",
-      change: "+180.1%",
-      trend: "up",
-      timeframe: "from last month",
-      icon: Users,
-      color: "text-blue-500 bg-blue-500/10 dark:bg-blue-500/20",
-    },
-    {
-      title: "Sales Orders",
-      value: "+12,234",
-      change: "+19.0%",
-      trend: "up",
-      timeframe: "from last month",
-      icon: CreditCard,
-      color: "text-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/20",
-    },
-    {
-      title: "Active Now",
-      value: "573",
-      change: "-4.2%",
-      trend: "down",
-      timeframe: "since last hour",
-      icon: Activity,
-      color: "text-amber-500 bg-amber-500/10 dark:bg-amber-500/20",
-    },
-  ];
-
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {metrics.map((metric) => {
-        const Icon = metric.icon;
+    <Card className="grid grid-cols-1 gap-0 py-0 sm:grid-cols-2 lg:grid-cols-4">
+      {metrics.map((metric, i) => {
         const isUp = metric.trend === "up";
+        const Arrow = isUp ? ArrowUpRight : ArrowDownRight;
 
         return (
-          <Card
+          <div
             key={metric.title}
-            className="relative overflow-hidden border transition-all hover:shadow-md"
+            className={cn(
+              "space-y-3 p-5 transition-colors duration-150 ease-out hover:bg-muted/40",
+              i > 0 && "border-t sm:border-t-0",
+              i % 2 === 1 && "sm:border-l",
+              i >= 2 && "sm:border-t lg:border-t-0",
+              i === 2 && "lg:border-l"
+            )}
           >
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-                {metric.title}
-              </CardTitle>
-              <div
-                className={`flex size-8 items-center justify-center rounded-lg ${metric.color}`}
+            <p className="text-[13px] font-medium text-muted-foreground">
+              {metric.title}
+            </p>
+            <p className="font-heading text-[1.65rem] leading-none font-semibold tracking-[-0.03em] tabular-nums">
+              {metric.value}
+            </p>
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span
+                className={cn(
+                  "inline-flex items-center gap-0.5 font-medium tabular-nums",
+                  isUp ? "text-success" : "text-destructive"
+                )}
               >
-                <Icon className="size-4" />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-1.5">
-              <div className="text-2xl font-bold tracking-tight">
-                {metric.value}
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <Badge
-                  variant={isUp ? "secondary" : "destructive"}
-                  className={`gap-0.5 px-1.5 py-0 text-[10px] font-semibold ${
-                    isUp
-                      ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
-                      : ""
-                  }`}
-                >
-                  {isUp ? (
-                    <ArrowUpRight className="size-3" />
-                  ) : (
-                    <ArrowDownRight className="size-3" />
-                  )}
-                  {metric.change}
-                </Badge>
-                <span className="truncate text-[11px]">{metric.timeframe}</span>
-              </div>
-            </CardContent>
-          </Card>
+                <Arrow className="size-3.5" />
+                {metric.change}
+              </span>
+              {metric.timeframe}
+            </p>
+          </div>
         );
       })}
-    </div>
+    </Card>
   );
 }
