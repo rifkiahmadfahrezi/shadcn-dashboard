@@ -67,7 +67,7 @@ export function RevenueChart() {
               aria-checked={activeRange === range.value}
               onClick={() => setActiveRange(range.value)}
               className={cn(
-                "active:scale-0.97 cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium tabular-nums transition-[color,background-color,box-shadow,transform] duration-150 ease-out outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium tabular-nums transition-[color,background-color,box-shadow,transform] duration-150 ease-out outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-97",
                 activeRange === range.value
                   ? "bg-background text-foreground shadow-xs"
                   : "text-muted-foreground hover:text-foreground"

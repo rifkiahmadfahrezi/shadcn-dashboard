@@ -167,7 +167,7 @@ export function HeaderSearchMenu() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="group active:scale-0.98 flex h-8 w-9 cursor-pointer items-center justify-center gap-2 rounded-lg border bg-card text-muted-foreground shadow-xs transition-[color,background-color,transform] duration-150 ease-out hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:w-56 sm:justify-between sm:px-2.5"
+        className="group flex h-8 w-9 cursor-pointer items-center justify-center gap-2 rounded-lg border bg-card text-muted-foreground shadow-xs transition-[color,background-color,transform] duration-150 ease-out hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-98 sm:w-56 sm:justify-between sm:px-2.5"
       >
         <div className="flex min-w-0 items-center gap-2 truncate">
           <Search className="size-3.5 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
@@ -180,7 +180,10 @@ export function HeaderSearchMenu() {
 
       {/* Portaled Dialog Search Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 shadow-md transition-none">
+        <DialogContent
+          showCloseButton={false}
+          className="top-16 max-w-[calc(100%-2rem)] translate-y-0 gap-0 overflow-hidden rounded-2xl p-0 shadow-md sm:top-24 sm:max-w-lg data-open:animate-none data-closed:animate-none"
+        >
           <DialogTitle className="sr-only">Search Menu</DialogTitle>
           <DialogDescription className="sr-only">
             Search dashboard menu options and navigation routes

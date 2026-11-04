@@ -13,6 +13,15 @@ import { ActivityFeed } from "@/components/dashboard/overview/activity-feed";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { EmptyState } from "@/components/dashboard/empty-state";
 
+const tabs = [
+  { value: "overview", label: "Overview" },
+  { value: "analytics", label: "Analytics" },
+  { value: "reports", label: "Reports" },
+  { value: "notifications", label: "Notifications" },
+];
+
+const panel = "animate-in duration-150 ease-out fade-in-0";
+
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
@@ -38,17 +47,25 @@ export default function DashboardPage() {
 
       <Tabs
         defaultValue="overview"
-        className="animate-rise space-y-6"
+        className="animate-rise gap-6"
         style={{ "--i": 1 } as React.CSSProperties}
       >
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+        <TabsList
+          variant="line"
+          className="h-10 w-full justify-start gap-5 overflow-x-auto rounded-none border-b p-0"
+        >
+          {tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              className="h-full flex-none px-0 text-muted-foreground after:scale-x-50 after:transition-[opacity,transform] after:duration-200 after:ease-out group-data-horizontal/tabs:after:-bottom-px dark:text-muted-foreground data-active:after:scale-x-100"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className={`space-y-6 ${panel}`}>
           <MetricCards />
 
           <div
@@ -68,7 +85,7 @@ export default function DashboardPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="analytics">
+        <TabsContent value="analytics" className={panel}>
           <EmptyState
             title="Cohort analysis is still collecting data"
             description="We need about 14 days of events before retention curves are meaningful. The first report lands on Nov 18."
@@ -81,7 +98,7 @@ export default function DashboardPage() {
           />
         </TabsContent>
 
-        <TabsContent value="reports">
+        <TabsContent value="reports" className={panel}>
           <EmptyState
             icon={FileText}
             title="No reports scheduled"
@@ -95,7 +112,7 @@ export default function DashboardPage() {
           />
         </TabsContent>
 
-        <TabsContent value="notifications">
+        <TabsContent value="notifications" className={panel}>
           <EmptyState
             icon={Bell}
             title="You're all caught up"
